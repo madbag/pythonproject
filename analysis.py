@@ -28,17 +28,43 @@ def run():
     return total
     run()
 
+
+#
+# # # 5.1 Monthly changes as a percentage
+# def monthly_Changes():
+#     data = read_data()
+#
+#     sales = []
+#     expenditure = []
+#     for column in data:
+#         sales_column = int(column['2018'])
+#         sales.append(sales_column)
+#
+#         expenditure_column = int(column['2018'])
+#         expenditure.append(expenditure_column)
+#
+#     result = (sales, expenditure)
+#     # return (result)
+#     print(result)
+#     # monthly_Changes()
+
+def calculate_monthly_changes(data):
+    monthly_changes = []
+    for i in range(1,13):
+        sales_month = int(data['2018_{:02d}'.format(i)])
+        expenditure_month = int(data['2018_{:02d}_expenditure'.format(i)])
+        monthly_changes.append({'month': i, 'sales_change': sales_month, 'expenditure_change': expenditure_month})
+    return monthly_changes
+
+def calculate_percent(current, previous):
+    return ((current - previous) / previous) * 100 if previous != 0 else 0
+
 # # 4. Summary of the results
 def summary():
     data = read_data()
-
     sales_Sum = run()
-    expenditure = []
-    for row in data:
-        exp = int(row['expenditure'])
-        expenditure.append(exp)
+    expenditure = [int(row['expenditure']) for row in data]
+    total_expenditure = sum(expenditure)
+    print('Summary of the result for the year 2018: {} sales, {} expenditure'. format(sales_Sum, total_expenditure))
 
-    total = sum(expenditure)
-    print('Summary of the result for the year 2018: {} sales, {} expenditure'. format(sales_Sum, total))
-summary()
 
