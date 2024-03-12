@@ -1,23 +1,16 @@
-# getting functionality of CSV module into the program
 import csv
 
 def read_data():
     data = []
-    # # 1. Read the data from the spreadsheet
     with open('sales.csv', 'r') as sales_csv:
-        # iterating rows as dictionaries.
-        # Rows = values and columns = keys
         spreadsheet = csv.DictReader(sales_csv)
-        # # 2. Collect all of the sales from each month into a single list
         for row in spreadsheet:
             data.append(row)
     return data
-print(read_data())
 
 # # 3. Output the total sales across all months
 def run():
     data = read_data()
-
     sales = []
     for row in data:
         sale = int(row['sales'])
@@ -26,45 +19,40 @@ def run():
     total = sum(sales)
     print('Total sale:{}'.format(total))
     return total
-    run()
-
-
-#
-# # # 5.1 Monthly changes as a percentage
-# def monthly_Changes():
-#     data = read_data()
-#
-#     sales = []
-#     expenditure = []
-#     for column in data:
-#         sales_column = int(column['2018'])
-#         sales.append(sales_column)
-#
-#         expenditure_column = int(column['2018'])
-#         expenditure.append(expenditure_column)
-#
-#     result = (sales, expenditure)
-#     # return (result)
-#     print(result)
-#     # monthly_Changes()
-
-def calculate_monthly_changes(data):
-    monthly_changes = []
-    for i in range(1,13):
-        sales_month = int(data['2018_{:02d}'.format(i)])
-        expenditure_month = int(data['2018_{:02d}_expenditure'.format(i)])
-        monthly_changes.append({'month': i, 'sales_change': sales_month, 'expenditure_change': expenditure_month})
-    return monthly_changes
-
-def calculate_percent(current, previous):
-    return ((current - previous) / previous) * 100 if previous != 0 else 0
 
 # # 4. Summary of the results
 def summary():
     data = read_data()
     sales_Sum = run()
-    expenditure = [int(row['expenditure']) for row in data]
-    total_expenditure = sum(expenditure)
-    print('Summary of the result for the year 2018: {} sales, {} expenditure'. format(sales_Sum, total_expenditure))
+    expenditure = []
+    for row in data:
+        exp = int(row['expenditure'])
+        expenditure.append(exp)
 
+    total = sum(expenditure)
+    print('Summary of the result for the year 2018: {} sales, {} expenditure'. format(sales_Sum, total))
+summary()
+
+# # 5.1 Monthly changes as a percentage
+def calculate_percentage_change(old_value, new_value):
+    if old_value == 0:
+        return 0
+    percentage_change = ((new_value - old_value) / abs(old_value)) * 100
+    return percentage_change
+
+def find_highest_lowest(data, column):
+    values = [int(row[column]) for row in data]
+    return min(values), max(values)
+
+def run_data():
+    data = read_data()
+    min_sales, max_sales = find_highest_lowest(data, 'sales')
+    min_expenditure, max_expenditure = find_highest_lowest(data, 'expenditure')
+
+    print('Lowest Sales: {}'.format(min_sales))
+    print('Highest Sales: {}'.format(max_sales))
+    print('Lowest Expenditure: {}'.format(min_expenditure))
+    print('Highest Expenditure: {}'.format(max_expenditure))
+
+run_data()
 
