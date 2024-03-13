@@ -34,11 +34,11 @@ def summary():
 summary()
 
 # # 5.1 Monthly changes as a percentage
-def calculate_percentage_change(old_value, new_value):
-    if old_value == 0:
-        return 0
-    percentage_change = ((new_value - old_value) / abs(old_value)) * 100
-    return percentage_change
+# def calculate_percentage_change(old_value, new_value):
+#     if old_value == 0:
+#         return 0
+#     percentage_change = ((new_value - old_value) / abs(old_value)) * 100
+#     return percentage_change
 
 def find_highest_lowest(data, column):
     values = [int(row[column]) for row in data]
@@ -55,4 +55,19 @@ def run_data():
     print('Highest Expenditure: {}'.format(max_expenditure))
 
 run_data()
+
+def calculate_avg(column):
+    data = read_data()
+    values = [int(row[column]) for row in data]
+    avg = sum(values)/ len(values)
+    return avg
+
+def run_avg():
+    avg_sales = calculate_avg('sales')
+    print('Average Sales: {:.2f}'.format(avg_sales))
+
+    avg_expenditure = calculate_avg('expenditure')
+    print('Average Expenditure: {:.2f}'.format(avg_expenditure))
+
+run_avg()
 
