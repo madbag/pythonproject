@@ -1,4 +1,4 @@
-#Python Spreadsheet Analysis for Code First Girls
+<h1>Python Spreadsheet Analysis for Code First Girls</h1>
 This Python project aims to analyze sales and expenditure data from a spreadsheet for the year 2018. The analysis includes calculating total sales and expenditure, finding monthly changes as percentages, determining the highest and lowest sales and expenditure values, and calculating average sales and expenditure.
 
 Project Structure
